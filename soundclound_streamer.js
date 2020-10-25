@@ -5,6 +5,7 @@ const readline = require('readline');
 
 const MUSIC_URL = 'https://soundcloud.com/discover';
 const genreSelector = '.mixedModularHome__item';
+const playBtnSelector = '.playbackSoundBadge__titleLink'
 
 const browser = await puppeteer.launch({
     headless: true,
@@ -87,5 +88,28 @@ var playListTitle = await page.evaluate((genreSelector, genreIndex) => {
 }, genreSelector, genreIndex);
 
 console.log("\n" + 'Playing the playlist : ' + playListTitle.toUpperCase() + ' from soundclound' + "\n");
+
+function delay(time) {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve, time);
+    });
+}
+
+await delay(500);
+
+var currentSong;
+
+while(1) {
+var songBeingPlayed = await page.evaluate((playBtnSelector) => {
+        const songBeingPlayed = Array.from(document.querySelectorAll(playBtnSelector));
+        console.log(songBeingPlayed.length + " okay ");
+        return songBeingPlayed[0].children[0].innerText;
+    }, playBtnSelector);
+    if(currentSong !== songBeingPlayed) {
+        currentSong = songBeingPlayed;
+        console.log(currentSong);
+    }
+    await delay(1000)
+}
 
 })();
