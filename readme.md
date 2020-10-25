@@ -2,8 +2,9 @@
 A terminal based music streamer that lets user select from available genres on 'soundcloud/discover' and plays any of Top 5 playlists from that genre.
 
 ## Setup
-  `npm install`
-  `npm i puppeteer-core`
+`npm install`
+
+`npm i puppeteer-core`
 
 ## Usage
 You need an existing chromium based browser which is required by puppeteer-core.
