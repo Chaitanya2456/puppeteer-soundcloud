@@ -12,8 +12,10 @@ In the browser config, change `executablePath` to your chromium based browser. Y
 
 ### Run instructions
 
-`cd puppeteer-soundclound`
+`cd puppeteer-soundcloud`
 
 `node soundcloud_streamer.js`
 
-It prompts you to slect a genre, then plays any of top 5 playlists from that genre.
+It prompts you to select a genre, then plays any of top 5 playlists from that genre.
+
+To exit, press `ctrl + c`.
