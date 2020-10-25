@@ -63,4 +63,29 @@ try {
 
 console.log("\n" + 'Selected Genre is ' + genreNamesList[parseInt(input) - 1]);
 
+const genreIndex = parseInt(input) - 1;
+
+var playListTitle = await page.evaluate((genreSelector, genreIndex) => {
+    const listOfAllGenres = document.querySelectorAll(genreSelector);
+    const playListCollection = listOfAllGenres[genreIndex].querySelectorAll('.audibleTile');
+    const playListCharts = listOfAllGenres[genreIndex].querySelectorAll('.systemPlaylistTile');
+
+    function playAndGetPlayListTitle(lists, listTitleSelector) {
+        const randIndex = Math.floor(Math.random() * Math.floor(lists.length));
+        lists[randIndex].querySelector('.sc-button-play').click();
+        const playListTitle = lists[randIndex].querySelector(listTitleSelector).innerText;
+        return playListTitle;
+    }
+
+    if (playListCollection.length != 0) {
+        return playAndGetPlayListTitle(playListCollection, '.sc-link-dark');
+    } else if (playListCharts.length != 0) {
+        return playAndGetPlayListTitle(playListCharts, '.playableTile__heading');
+    } else {
+        return "Sorry no playlists found";
+    }
+}, genreSelector, genreIndex);
+
+console.log("\n" + 'Playing the playlist : ' + playListTitle.toUpperCase() + ' from soundclound' + "\n");
+
 })();
