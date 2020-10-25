@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer-core');
+const readline = require('readline');
 
 (async() => {
 
@@ -34,5 +35,32 @@ console.log("\n" + "Available genres are : " + "\n");
 for (index in genreNamesList) {
     console.log((parseInt(index) + 1) + ' - ' + genreNamesList[index]);
 }
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
+function getInput(question) {
+    return new Promise((resolve) => {
+      rl.question(question, (answer) => {
+        resolve(answer);
+      });
+    });
+}
+
+var input;
+
+try {
+    input = await getInput("\n" + 'To select the genre, input the genre number and hit enter' + "\n");
+    while (!Number.isInteger(parseInt(input)) || parseInt(input) > genreNamesList.length) {
+      input = await getInput("\n" + 'Invalid input. Enter again' + "\n");
+    }
+    rl.close();
+} catch (err) {
+    console.error(err);
+}
+
+console.log("\n" + 'Selected Genre is ' + genreNamesList[parseInt(input) - 1]);
 
 })();
